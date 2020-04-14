@@ -16,12 +16,12 @@ let cookieClicker = document.getElementById('cookie-clicker');
 cookieClicker.addEventListener("click", function() {
   cookieCount = cookieCount + clickPower;
   refreshCookieCount()
-})
+});
 
 //refresh cookies
 let refreshCookieCount = function() {
   cookieCounter.innerHTML = cookieCount;
-}
+};
 
 /********************************
 
@@ -48,13 +48,14 @@ if (cookieCount >= clickPowerPriceAmount) {
   console.log("Item succesfully Bought");
 } else {
   console.log("You don't have enough cookies!");
-
 }
 //update Click Power
    clickPower += 1 * Math.floor(clickPowerLevelNumber * 1.05);
-})
 
-if (cookieCount >= clickPowerPriceAmount) {
+   //Update click price
+   clickPowerPriceAmount = Math.floor(clickPowerPriceAmount * 1.33);
+
+
 //subtract cookies from the price of the item
 cookieCount -= clickPowerPriceAmount;
 refreshCookieCount()
@@ -65,23 +66,8 @@ clickPowerLevelNumber += 1;
 //refresh shop item
 refreshPowerClick();
 
-}
+});
 
-//Upgrade power level
-clickPowerLevelNumber += 1;
-
-//Update click price
-clickPowerPriceAmount = Math.floor(clickPowerPriceAmount * 1.33);
-
-//refresh shop item
-refreshPowerClick();
-
-//update Click Power
-clickPower += 1;
-
-let refreshCookieCount = function() {
-cookieCounter.innerHTML = cookieCount;
-}
 
 let refreshPowerClick = function() {
 clickPowerLevel.innerHTML = clickPowerLevelNumber
@@ -106,30 +92,10 @@ clickPowerMultiple.innerHTML = clickPower;
   let grandmaLevel = document.getElementById('grandma-level');
   let grandmaMultiple = document.getElementById('grandma-multiple');
 
-  //turn autoGrandma on!
-  autoGrandma = true
-  autoGrandmaStart();
-
-  window.setInterval(function(){
-  //executing code loop goes here
-  }, numberOfMilliSeconds)
-
-  let autoGrandmaStart = function() {
-    let grandmaInt = window.setInterval(function(){
-    cookieCount += grandmaPower;
-    refreshCookieCount();
-    }, 1000);
-  }
-
-  let refreshGrandma = function() {
-  ...
-  grandmaMultiple.innerHTML = grandmaPower - 10;
-  }
 
   //buy a grandma
   buyGrandma.addEventListener("click", function() {
-    //update grandma power
-    grandmaPower += 10 + Math.floor(grandmaLevelNumber * 1.33);
+
 
   //make sure we have enough cookies and subtract our cookies from the price
   // Make sure we have enough cookies and subtract our cookies from the price.
@@ -141,22 +107,32 @@ clickPowerMultiple.innerHTML = clickPower;
      //update price
      grandmaPriceAmount = Math.floor(grandmaPriceAmount * 1.33);
 
+     grandmaLevelNumber += 1;
 
      //update grandma power
-     grandmaPower += 10;
+     grandmaPower += 10 * Math.floor(grandmaLevelNumber * 1.33);
 
      //turn autoGrandma on!
+     autoGrandma = true
+     autoGrandmaStart();
 
      //refresh shop item
      refreshGrandma();
-  })
+   }
+  });
 
   let refreshGrandma = function() {
-    grandmaLevel.innerHTML = grandmaLevelNumber
+    grandmaLevel.innerHTML = grandmaLevelNumber;
     grandmaPrice.innerHTML = grandmaPriceAmount;
-    grandmaMultiple.innerHTML = grandmaPower;
+    grandmaMultiple.innerHTML = grandmaPower - 10;
   }
-
+  //turn autoGrandma on!
+  let autoGrandmaStart = function() {
+    let grandmaInt = window.setInterval(function(){
+    cookieCount += grandmaPower;
+    refreshCookieCount();
+    }, 1000);
+  }
   /********************************
 
             Facilities
@@ -178,11 +154,6 @@ clickPowerMultiple.innerHTML = clickPower;
   let facilityMultiple = document.getElementById('facility-multiple');
   //buy a facility
 buyFacility.addEventListener("click", function() {
-    //set autoLoop to false
-    facilityAuto = false;
-    //update facility power
-    facilityPower += 600 + Math.floor(facilityLevelNumber * 1.33);;
-
     //make sure we have enough cookies
     if (cookieCount >= facilityPriceAmount) {
       cookieCount -= facilityPriceAmount;
@@ -204,6 +175,9 @@ buyFacility.addEventListener("click", function() {
   //refresh shop item
   refreshFacility();
 
+  }
+});
+
   //refresh shop
 let refreshFacility = function() {
   facilityLevel.innerHTML = facilityLevelNumber
@@ -217,5 +191,3 @@ let refreshFacility = function() {
         refreshCookieCount();
       }, 1000);
 }
-  }
-})
